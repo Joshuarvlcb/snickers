@@ -18,18 +18,24 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { password, username } = req.body;
-  if (!password || !username)
-    return res.status(404).send("invalid credentials");
-
-  const user = await UserModel.findOne({ username });
-  if (!user) return res.status(400).send('"username or password incorrect"');
-  const pw = await user.comparePasswords(password);
-  if (!pw) return res.status(401).send("username or password incorrect");
-
-  const token = await user.createJwt();
-
-  return res.status(200).json({ user, token });
+  try{
+    const { password, email } = req.body;
+    if (!password || !email)
+      return res.status(404).send("invalid credentials");
+  
+    const user = await UserModel.findOne({ email });
+    if (!user) return res.status(400).send('"username or password incorrect"');
+    const pw = await user.comparePasswords(password);
+    if (!pw) return res.status(401).send("username or password incorrect");
+  
+    const token = await user.createJwt();
+  
+    return res.status(200).json({ user, token });
+  }catch(err){
+    console.log(err);
+    res.status(500).send("error @ login");
+  }
+ 
 };
 
 module.exports = { login, register };
