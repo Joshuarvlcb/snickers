@@ -12,3 +12,26 @@
     }
   }
 }
+.search {
+  display: flex;
+  flex-direction: column;
+  input {
+    width: 200px;
+  }
+}
+.modal {
+  height: 80vh;
+  width: 100vw;
+  background-color: bisque;
+  .shoes_container {
+    display: flex;
+    flex-wrap: wrap;
+    .shoe {
+      cursor: pointer;
+      display: flex;
+      width: 100px;
+      height: 100px;
+      margin-right: 9rem;
+    }
+  }
+}

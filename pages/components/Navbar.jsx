@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "../../styles/Navbar.module.scss";
 import Link from "next/link";
-const Navbar = () => {
+import Search from "./Search";
+const Navbar = ({ popularShoes }) => {
   return (
     <nav className={styles.navbar}>
-      <input type="text" style={styles.search} />
+      <Search popularShoes={popularShoes} />
       <div className={styles.logo}>logo</div>
 
       <ul className={styles.links}>

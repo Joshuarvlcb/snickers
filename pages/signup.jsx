@@ -1,76 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { signup as signupAction } from "../util/loginActions";
+import { signup as createUser } from "./util/loginActions";
 import Link from "next/link";
-
-/*
-??state
-username email password loading picture
-submit disabled
-
-??Functions
-check to see if username exist
-submit function 
-onchnage function
-
-make err
-
-
-
-
-*/
 const signup = () => {
-  const [setLoading, setSetLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState(false);
-  const [submitDisabled, setSubmitDisabled] = useState(false);
-  const [data, setData] = useState({ username: "", email: "", password: "" });
+  /*
+    {
+        name:''
+    }
+    filter find name and change value to e.target.value
+    */
 
-  return setLoading ? (
-    <>
-      <h1>loading</h1>
-    </>
-  ) : (
-    <>
+  const [signupData, setSignupData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState(false);
+
+  return (
+    <div>
       <form
-        action=""
-        onSubmit={(e) => {
+        action="#"
+        onSubmit={async (e) => {
           e.preventDefault();
-          signupAction(
-            data.username,
-            data.email,
-            data.password,
-            setSetLoading,
-            setSubmitDisabled,
-            setErrMsg
-          );
+          createUser(signupData, setError);
         }}
       >
         <input
+          required={true}
           type="text"
+          placeholder="name"
           onChange={(e) => {
-            setData({ ...data, username: e.target.value });
+            setSignupData({ ...signupData, username: e.target.value });
           }}
         />
         <input
+          required={true}
           type="text"
+          placeholder="email"
           onChange={(e) => {
-            setData({ ...data, email: e.target.value });
+            setSignupData({ ...signupData, email: e.target.value });
           }}
         />
         <input
-          type="text"
+          required={true}
+          type="password"
+          placeholder="password"
           onChange={(e) => {
-            setData({ ...data, password: e.target.value });
+            setSignupData({ ...signupData, password: e.target.value });
           }}
         />
-        <button type="submit" disabled={submitDisabled}>
-          sign up!
-        </button>
+
         <Link href="/login">
           <a>login</a>
         </Link>
-        {errMsg && <h1>there is an error</h1>}
+        <button value="submit">submit</button>
       </form>
-    </>
+      {error ? (
+        <>
+          <div onClick={() => setError(!error)} className="error">
+            email already exists
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+    </div>
   );
 };
 
