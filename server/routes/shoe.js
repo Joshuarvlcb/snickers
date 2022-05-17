@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth");
-const { getShoe, getShoes } = require("../controllers/shoe");
-router.get("/shoes", getShoes);
-router.get("/shoes/:id", getShoe);
+const { getShoe, getShoes, popular, newest } = require("../controllers/shoe");
+router.route("/shoes").get(getShoes);
+router.route("/shoes/popular").get(popular);
+router.route("/shoes/newest").get(newest);
+router.route("/shoes/:id").get(getShoe);
 
 module.exports = router;

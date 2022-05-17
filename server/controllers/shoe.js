@@ -1,22 +1,10 @@
 const Shoe = require("../models/Shoe");
 
 const getShoes = async (req, res) => {
-  /*
-    start off with all the shoes 
-    find all querys
-    brand
-    price lowest to > || highest to <
-    gender
-    
-
-    filter
-    return shoes
-    */
   try {
-    const shoes = [];
+    let shoes = [];
     const shoe = await Shoe.find({});
     const { brand, price, gender } = req.query;
-    console.log(gender);
     if (brand) {
       shoe.forEach((obj) => {
         if (brand === obj.brand) shoes.push(obj);
@@ -31,19 +19,7 @@ const getShoes = async (req, res) => {
         return res.status(400).send("query does not exist");
       }
     }
-    if (price) {
-      if (!shoes.length) shoes = shoe.slice();
-      if (price == -1) {
-        shoes.sort((a, b) =>
-          a.retailPrice > b.retailPrice ? 1 : a.retailPrice === b.retailPrice
-        )
-          ? 0
-          : -1;
-      }
-      //   } else if (price == 1) {
-      //     shoes.sort((a, b) => b.retailPrice - a.retailPrice);
-      //   }
-    }
+    if (shoes.length === 0) shoes = shoe;
     return res.status(200).json(shoes);
   } catch (err) {
     console.log(err);
@@ -59,4 +35,23 @@ const getShoe = async (req, res) => {
   return res.status(200).json(shoe);
 };
 
-module.exports = { getShoes, getShoe };
+const popular = async (req, res) => {
+  try {
+    const shoes = await Shoe.find({ popular: true });
+    return res.status(200).json({ popularShoes: shoes });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("error @ popular");
+  }
+};
+const newest = async (req, res) => {
+  try {
+    const shoes = await Shoe.find({ newest: true });
+    return res.status(200).json({ newestShoes: shoes });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("error @ newest");
+  }
+};
+
+module.exports = { getShoes, getShoe, newest, popular };

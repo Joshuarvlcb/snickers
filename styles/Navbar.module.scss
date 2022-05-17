@@ -1,0 +1,14 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  .logo {
+  }
+  .search {
+  }
+  .links {
+    display: flex;
+    .link {
+      list-style: none;
+    }
+  }
+}

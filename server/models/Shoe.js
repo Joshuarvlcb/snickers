@@ -1,24 +1,28 @@
 const mongoose = require("mongoose");
 
 const ShoeSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
   },
-  gender: {
+  pic: {
     type: String,
     required: true,
   },
-  retailPrice: {
+  price: {
     type: Number,
     required: true,
   },
   brand: {
     type: String,
+    required: true,
+  },
+  popular: {
+    type: Boolean,
+    required: true,
+  },
+  newest: {
+    type: Boolean,
     required: true,
   },
 });

@@ -15,11 +15,11 @@ app.use([express.urlencoded({ extended: false }), express.json()]);
 const authMiddleware = require("./server/middleware/auth");
 //routes
 const shoes = require("./server/routes/shoe");
-const auth = require("./server/routes/login");
+const login = require("./server/routes/login");
 const cart = require("./server/routes/cart");
-app.use("/api/v1/auth", auth);
+app.use("/api/v1/auth", login);
 app.use("/api/v1/cart", cart);
-app.use("/api/v1", authMiddleware, shoes);
+app.use("/api/v1", shoes);
 connectDB();
 
 //start server!!
