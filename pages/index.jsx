@@ -7,21 +7,31 @@ import Navbar from "./components/Navbar";
 import LoadButton from "./components/LoadButton";
 import Footer from "./components/Footer";
 import Landing from "./components/Landing";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import { baseURL } from "./util/auth";
-function Home({ popular }) {
+function Home({ popular, newest }) {
+  console.log(popular.popularShoes);
+  console.log(newest.newestShoes);
   return (
     <div>
       <Navbar popularShoes={popular.popularShoes} />
       <Landing />
       <h1>popular</h1>
-      <Shoe />
+      <div className={styles["shoe_container"]}>
+        {popular.popularShoes.slice(0, 8).map((shoe) => {
+          return <Shoe name={shoe.name} brand={shoe.brand} pic={shoe.pic} />;
+        })}
+      </div>
       <LoadButton />
       <h1>newest</h1>
+      <div className={styles["shoe_container"]}>
+        {newest.newestShoes.slice(0, 8).map((shoe) => {
+          return <Shoe name={shoe.name} brand={shoe.brand} pic={shoe.pic} />;
+        })}
+      </div>
       <LoadButton />
-      <Shoe />
       <Footer />
       <button
         onClick={(e) => {
@@ -46,7 +56,16 @@ Home.getInitialProps = async (ctx, component) => {
         },
       }
     );
-    return { popular: results.data };
+    const newest = await axios.get(
+      baseURL + "shoes/newest",
+      {},
+      {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      }
+    );
+    return { popular: results.data, newest: newest.data };
   } catch (err) {
     console.log(err, "error in search component");
     return {};

@@ -1,7 +1,11 @@
 import React from "react";
 
 const LoadButton = () => {
-  return <div>LoadButton</div>;
+  return (
+    <div>
+      <button>see more</button>
+    </div>
+  );
 };
 
 export default LoadButton;

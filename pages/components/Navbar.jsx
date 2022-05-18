@@ -10,10 +10,16 @@ const Navbar = ({ popularShoes }) => {
 
       <ul className={styles.links}>
         <li className={styles.link}>
-          <Link href="/sneaker">Sneakers</Link>
+          <Link href="/sneakers">Sneakers</Link>
         </li>
         <li className={styles.link}>
           <Link href="/account">Account</Link>
+        </li>
+        <li className={styles.link}>
+          <Link href="/account">Bag</Link>
+        </li>
+        <li className={styles.link}>
+          <Link href="/account">Wishlist</Link>
         </li>
       </ul>
     </nav>

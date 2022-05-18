@@ -1,9 +1,9 @@
 import React from "react";
-import style from "../../styles/Landing.module.scss";
+// import style from "../../styles/Landing.module.scss";
 const Landing = () => {
   return (
     <>
-      <div className={style.landing}></div>
+      <div></div>
     </>
   );
 };
