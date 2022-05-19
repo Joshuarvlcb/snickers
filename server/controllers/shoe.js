@@ -1,80 +1,35 @@
 const Shoe = require("../models/Shoe");
 
-/*
-filter and sort with getShoes
-state that keeps track of all querys
-
-pass in all querys in clientSide in request
-
-
-*/
 
 const getShoes = async (req, res) => {
-  /*
-  filter
-    model
-    brand
-    price
 
-  sort
-    low to high
-    high to low
-    newest > popular
-    popular > newest
-
-    front end
-    state for filter objects
-    state for sort objects
-
-    useEffect(() => {
-        getResults(axios.get('/shoes?querys))
-    },[results])
-
-    pagination
-    10 per page
-    
-    pages = Math.floor(10/results)
-
-    Shoe when you click on shoe you route to shoe name
-
-    when you click on buy now route to payment page
-    use stripe
-    send email
-
-    */
   try {
     let shoes = [];
     const shoe = await Shoe.find({});
-    const { brand, price, model, ascending, descending, popular, newest } =
+    const { brand, low,high, model, ascending, descending, popular, newest } =
       req.query;
     if (brand) {
       shoe.forEach((obj) => {
-        if (brand === obj.brand) shoes.push(obj);
+        if (brand.toLowerCase() === obj.brand.toLowerCase()) shoes.push(obj);
       });
     }
     if (model) {
       shoe.forEach((obj) => {
-        if (model === obj.model) shoes.push(obj);
+        if (model.toLowerCase() === obj.model.toLowerCase()) shoes.push(obj);
       });
     }
-    if (price) {
+    if (high || low) {
       /*
       if we have other filters
         filter the shoes array
       else 
       filter Shoe collection
       */
-      if (shoe.length === 0) {
-        for (let sneaker of shoe) {
-          if (sneaker.price >= price.low && sneaker.price <= price.high)
-            shoes.push(sneaker);
-        }
-      } else {
-        for (let sneaker of shoes) {
-          if (sneaker.price >= price.low && sneaker.price <= price.high)
-            shoes.push(sneaker);
-        }
-      }
+    if(shoes.length >= 0){
+      shoes = shoes.filter((obj) => obj.price >= low && obj.price <= high)
+    }else{
+      shoes = shoe.filter((obj) => obj.price >= low && obj.price <= high)
+    }
     }
     if (shoes.length === 0) shoes = shoe;
     // if (gender) {
@@ -117,13 +72,31 @@ const getShoes = async (req, res) => {
       }
       */
       let index = 0;
-      while (index === array.length - 1) {
-        for (let [i, number] of Object.entries(array)) {
+      while (index <= shoes.length - 1) {
+        for (let [i, obj] of Object.entries(shoes)) {
           if (index >= i) {
-            if (arr[index] > number) {
-              let temp = array[index];
-              array[index] = array[i];
-              array[i] = temp;
+            if (shoes[index].price < obj.price) {
+
+              /*
+              2 < 50
+
+              */
+              let temp = shoes[index].price;
+              //2
+              shoes[index].price = obj.price;
+              //i = 50
+              shoes[i].price = temp;
+              //j = 2
+              /*
+              [2,67,50]
+              temp = 2
+              i = 50
+              j = 2
+
+              [2,50]
+
+              
+              */
             }
           }
         }
@@ -131,15 +104,15 @@ const getShoes = async (req, res) => {
       }
     }
     if (descending) {
-      let array = arr;
       let index = 0;
-      while (index === array.length - 1) {
-        for (let [i, number] of Object.entries(array)) {
+      while (index <= shoes.length - 1) {
+        for (let [i, obj] of Object.entries(shoes)) {
           if (index >= i) {
-            if (arr[index] < number) {
-              let temp = array[index];
-              array[index] = array[i];
-              array[i] = temp;
+            if (shoes[index].price > obj.price) {
+              let temp = shoes[index].price;
+              shoes[index].price = obj.price;
+              shoes[i].price = temp;
+          
             }
           }
         }
@@ -154,12 +127,12 @@ const getShoes = async (req, res) => {
       */
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
-      shoes = [...popular, newest];
+      shoes = [...popular, ...newest];
     }
     if (newest) {
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
-      shoes = [...newest, popular];
+      shoes = [...newest, ...popular];
     }
 
     return res.status(200).json(shoes);
