@@ -14,6 +14,53 @@ import { baseURL } from "./util/auth";
 function Home({ popular, newest }) {
   console.log(popular.popularShoes);
   console.log(newest.newestShoes);
+
+  /*
+      lowest => greatest
+
+      have one pointer that will compare to every value in the array 
+      ??am i guarenteed to find the smallest value first iteration 
+      !!YES
+      after each iteration I want to start swapping on pointer index in array
+
+      let index = 0
+      while(true){
+        let state = true;
+        for(let [i,number] of Object.entries(arr)){
+          if(i >= index){
+            232 > 2
+            if(arr[index] > number){
+              let temp = arr[i];
+              arr[index] = arr[i];
+              arr[i] = temp
+              state = false
+            }
+          }
+        }
+        index++
+        if(state is true) break
+      }
+      */
+  const array = [34545, 45, 3, 3232, 2, 90, 23123, 3, 1, 3, 9];
+  const sort = (arr) => {
+    let array = arr;
+    let index = 0;
+    while (index === array.length - 1) {
+      for (let [i, number] of Object.entries(array)) {
+        if (index >= i) {
+          if (arr[index] > number) {
+            let temp = array[index];
+            array[index] = array[i];
+            array[i] = temp;
+          }
+        }
+      }
+      index++;
+    }
+
+    console.log(arr);
+  };
+  sort(array);
   return (
     <div>
       <Navbar popularShoes={popular.popularShoes} />
