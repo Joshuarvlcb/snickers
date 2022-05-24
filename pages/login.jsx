@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import Cookie from "js-cookie";
 import { login as loggingUser } from "./util/loginActions";
+import styles from "../styles/Auth.module.scss";
 const login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
@@ -13,50 +15,60 @@ const login = () => {
   }, []);
 
   return (
-    <>
-      <h1>login </h1>
-      <form
-        action="#"
-        onSubmit={(e) => {
-          e.preventDefault();
-          loggingUser(loginData, setError);
-        }}
-      >
-        <input
-          type="text"
-          value={loginData.email}
-          onChange={(e) => {
-            setLoginData({ ...loginData, email: e.target.value });
-          }}
-        />
-        <input
-          type="password"
-          onChange={(e) => {
-            setLoginData({ ...loginData, password: e.target.value });
-          }}
-        />
-        <button
-          value="submit"
-          // onClick={() =>
-          //   Cookie.set("token", "oihdsfkdskfnoksdfnojnefdo38732984793824")
-          // }
-        >
-          submit
-        </button>
-        <Link href="/signup">
-          <a>signup</a>
-        </Link>
-      </form>
-      {error ? (
-        <>
-          <div onClick={() => setError(!error)} className="error">
-            invalid credentials
-          </div>
-        </>
-      ) : (
-        ""
-      )}
-    </>
+    <div className={styles["auth"]}>
+      <div className={styles["form-container"]}>
+        <div className={styles["login-container"]}>
+          <h1 className={styles["title"]}>Sign in</h1>
+          <p className={styles["text"]}>
+            Dont have an account?{" "}
+            <Link href="/signup">
+              <a className={styles["link"]}> Create account</a>
+            </Link>
+          </p>
+          <form
+            action="#"
+            className={styles["column"]}
+            onSubmit={(e) => {
+              e.preventDefault();
+              loggingUser(loginData, setError);
+            }}
+          >
+            <input
+              required={true}
+              className={styles["input"]}
+              type="text"
+              value={loginData.email}
+              placeholder="Email"
+              onChange={(e) => {
+                setLoginData({ ...loginData, email: e.target.value });
+              }}
+            />
+            <input
+              required={true}
+              className={styles["input"]}
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                setLoginData({ ...loginData, password: e.target.value });
+              }}
+            />
+            <button value="submit" className={styles["button"]}>
+              Login
+            </button>
+          </form>
+          {error ? (
+            <>
+              <div className={styles["error"]}>
+                <IoCloseCircleOutline className={styles["close"]} />
+                Email or password not correct.
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

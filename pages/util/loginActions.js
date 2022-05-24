@@ -19,7 +19,7 @@ export const login = async (data, setError) => {
   }
 };
 
-export const signup = async (data, setError) => {
+export const signup = async (data, setError, setErrorMsg) => {
   try {
     const createUser = await axios.post(
       "http://localhost:3000/api/v1/auth/register",
@@ -31,6 +31,7 @@ export const signup = async (data, setError) => {
       Cookie.set("email", data.email);
     }
   } catch (err) {
+    setErrorMsg("Email already exist");
     console.log(err, "happend in signup function");
     setError(true);
   }

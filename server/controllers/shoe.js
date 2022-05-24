@@ -1,13 +1,14 @@
 const Shoe = require("../models/Shoe");
 
-
 const getShoes = async (req, res) => {
-
   try {
     let shoes = [];
     const shoe = await Shoe.find({});
-    const { brand, low,high, model, ascending, descending, popular, newest } =
+    const { brand, low, high, model, ascending, descending, popular, newest } =
       req.query;
+
+    console.log(ascending, descending, popular, newest, brand);
+
     if (brand) {
       shoe.forEach((obj) => {
         if (brand.toLowerCase() === obj.brand.toLowerCase()) shoes.push(obj);
@@ -25,11 +26,14 @@ const getShoes = async (req, res) => {
       else 
       filter Shoe collection
       */
-    if(shoes.length >= 0){
-      shoes = shoes.filter((obj) => obj.price >= low && obj.price <= high)
-    }else{
-      shoes = shoe.filter((obj) => obj.price >= low && obj.price <= high)
-    }
+      if (model || brand) {
+        shoes = shoes.filter((obj) => obj.price >= +low && obj.price <= +high);
+        if (shoes.length == 0) return res.status(205).json({ shoes });
+      } else {
+        shoes = shoe.filter((obj) => {
+          return obj.price >= +low && obj.price <= +high;
+        });
+      }
     }
     if (shoes.length === 0) shoes = shoe;
     // if (gender) {
@@ -45,58 +49,16 @@ const getShoes = async (req, res) => {
     sort shoes
     */
     if (ascending) {
-      /*
-      lowest => greatest
+      console.log("ascending");
 
-      have one pointer that will compare to every value in the array 
-      ??am i guarenteed to find the smallest value first iteration 
-      !!YES
-      after each iteration I want to start swapping on pointer index in array
-
-      let index = 0
-      while(true){
-        let state = true;
-        for(let [i,number] of Object.entries(arr)){
-          if(i >= index){
-            232 > 2
-            if(arr[index] > number){
-              let temp = arr[i];
-              arr[index] = arr[i];
-              arr[i] = temp
-              state = false
-            }
-          }
-        }
-        index++
-        if(state is false) break
-      }
-      */
       let index = 0;
       while (index <= shoes.length - 1) {
         for (let [i, obj] of Object.entries(shoes)) {
           if (index >= i) {
             if (shoes[index].price < obj.price) {
-
-              /*
-              2 < 50
-
-              */
               let temp = shoes[index].price;
-              //2
               shoes[index].price = obj.price;
-              //i = 50
               shoes[i].price = temp;
-              //j = 2
-              /*
-              [2,67,50]
-              temp = 2
-              i = 50
-              j = 2
-
-              [2,50]
-
-              
-              */
             }
           }
         }
@@ -104,6 +66,7 @@ const getShoes = async (req, res) => {
       }
     }
     if (descending) {
+      console.log("decending");
       let index = 0;
       while (index <= shoes.length - 1) {
         for (let [i, obj] of Object.entries(shoes)) {
@@ -112,7 +75,6 @@ const getShoes = async (req, res) => {
               let temp = shoes[index].price;
               shoes[index].price = obj.price;
               shoes[i].price = temp;
-          
             }
           }
         }
@@ -125,11 +87,13 @@ const getShoes = async (req, res) => {
       loop 2 times 
       combine popular than newest
       */
+      console.log("popular");
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
       shoes = [...popular, ...newest];
     }
     if (newest) {
+      console.log("newest");
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
       shoes = [...newest, ...popular];

@@ -1,0 +1,106 @@
+.shoe-container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  font-family: "Nunito", sans-serif;
+  padding: 0 3rem;
+
+  .shoe-img {
+    width: 50%;
+    .image {
+      width: 100%;
+    }
+  }
+  .info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5rem;
+
+    .shoe-brand {
+      color: rgb(77, 77, 77);
+      font-size: 16px;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+    .shoe-name {
+      color: black;
+      font-size: 2rem;
+      font-weight: bold;
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+    .shoe-price {
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: rgb(255, 41, 41);
+      margin-bottom: 2rem;
+    }
+    .button-container {
+      display: flex;
+      outline: none;
+      margin-bottom: 2rem;
+
+      .cart-button {
+        font-family: "Nunito", sans-serif;
+        margin-right: 1rem;
+        cursor: pointer;
+        width: 40%;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        padding: 1.4rem 0;
+        letter-spacing: 2px;
+        font-size: 1rem;
+        border: none;
+      }
+      .heart-button {
+        font-family: "Nunito", sans-serif;
+        letter-spacing: 1.5px;
+
+        width: 40%;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        background-color: transparent;
+
+        border: solid 2px rgb(0, 0, 0);
+
+        .heart {
+          font-size: 1.4rem;
+          margin-left: 0.6rem;
+        }
+      }
+    }
+    .size-container {
+      margin-bottom: 2rem;
+
+      display: grid;
+      grid-template-columns: repeat(5, 100px);
+      grid-gap: 8px;
+      .size {
+        cursor: pointer;
+        height: 50px;
+        width: 100px;
+        border: solid black 2px;
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        align-items: center;
+        &:hover {
+          background-color: black;
+          color: white;
+        }
+      }
+      .clicked {
+        background-color: black;
+        font-weight: bold;
+        color: white;
+      }
+    }
+  }
+}

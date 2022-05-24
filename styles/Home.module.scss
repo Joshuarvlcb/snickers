@@ -1,6 +1,85 @@
-.landing {
+.home {
+  position: relative;
+  background-color: rgb(241, 241, 241);
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.shoe_container{
+.shoe-section {
+  width: 80vw;
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(50px, max-content));
+  margin: 0 auto;
+  .title {
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+}
+.shoe_container {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  grid-gap: 2rem;
+  justify-content: center;
+
+  .shoe {
+    cursor: pointer;
+    height: 250px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    .info {
+      // margin-top: auto;
+      margin-bottom: auto;
+      margin-top: 1rem;
+    }
+    .brand {
+      font-size: 12px;
+      color: grey;
+    }
+    .name {
+      width: 200px;
+      font-size: 15px;
+    }
+    .pic {
+      height: 150px;
+    }
+  }
+}
+
+.margin {
+  padding-top: 160px;
+}
+.margin-bottom {
+  margin-bottom: 150px;
+}
+.button {
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  background-color: black;
+  outline: none;
+  border: none;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 1rem 3rem;
+  cursor: pointer;
+}
+.center {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+
+.footer {
+  width: 100%;
+  min-height: 150px;
+  background-color: black;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

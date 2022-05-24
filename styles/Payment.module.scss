@@ -1,0 +1,11 @@
+.payment-container {
+  display: flex;
+  justify-content: center;
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+    .step {
+      background-color: white;
+    }
+  }
+}

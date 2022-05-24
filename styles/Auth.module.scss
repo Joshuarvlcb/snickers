@@ -1,0 +1,86 @@
+.auth {
+  font-family: "Nunito", sans-serif;
+
+  height: 100vh;
+  min-height: 100vh;
+  background-color: rgb(241, 241, 241);
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 1.3rem;
+}
+.login-container,
+.signup-container {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  width: 400px;
+  max-height: 500px;
+  padding-bottom: 2rem;
+}
+.text {
+  font-weight: 600;
+  margin-top: 0;
+}
+.link {
+  color: rgb(14, 171, 243);
+}
+.title {
+  margin-top: 3rem;
+  margin-bottom: 8px;
+  font-size: 40px;
+}
+.input {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 70%;
+  border: 2px solid rgb(194, 194, 194);
+  outline: none;
+  margin-bottom: 1rem;
+}
+.button {
+  font-family: "Nunito", sans-serif;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  font-size: 17px;
+  color: white;
+  width: 78%;
+  border-radius: 10px;
+  outline: none;
+  letter-spacing: 0.6px;
+  border: none;
+  background-color: rgb(14, 171, 243);
+  padding: 0.8rem;
+  font-weight: bold;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: -6rem;
+  transform: translateX(-50%);
+  padding: 1.3rem;
+  text-align: left;
+  border: 2px red solid;
+  color: red;
+  width: 450px;
+}
+.close {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: red;
+}
