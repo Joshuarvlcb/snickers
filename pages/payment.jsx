@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Steps from "./components/Steps";
 import styles from "../styles/Payment.module.scss";
+import Cookie from "js-cookie";
+
 /*
 step component
 return jsx
@@ -9,7 +11,7 @@ create array with names of step map those return step
 props passed in will be setData and name 
 
 */
-const payment = () => {
+const payment = ({ email }) => {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({
     account: {
@@ -25,14 +27,6 @@ const payment = () => {
       state: "",
       phoneNumber: "",
     },
-    // payment: {
-    //   name: "",
-    //   card: {
-    //     card_number: "",
-    //     data: "",
-    //     cvc: "",
-    //   },
-    // },
   });
   useEffect(() => {
     console.log(data);
@@ -49,6 +43,7 @@ const payment = () => {
               data={data}
               step={step}
               setStep={setStep}
+              email={email}
             />
           );
         })}

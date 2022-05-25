@@ -87,13 +87,11 @@ const getShoes = async (req, res) => {
       loop 2 times 
       combine popular than newest
       */
-      console.log("popular");
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
       shoes = [...popular, ...newest];
     }
     if (newest) {
-      console.log("newest");
       const popular = shoes.filter((shoe) => shoe.popular);
       const newest = shoes.filter((shoe) => shoe.newest);
       shoes = [...newest, ...popular];

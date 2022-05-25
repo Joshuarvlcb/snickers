@@ -32,7 +32,7 @@ const Navbar = ({ popularShoes }) => {
               <Link href="/cart">
                 <a>Cart</a>
               </Link>
-              <Link href={Cookie.get("token") ? "/login" : "/signup"}>
+              <Link href={"/login"}>
                 <a
                   onClick={() => {
                     if (!Cookie.get("token")) return;

@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import styles from "../../styles/Payment.module.scss";
+
 import { baseURL } from "../util/auth";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 const Form = ({ data }) => {
@@ -7,6 +9,7 @@ const Form = ({ data }) => {
   const elements = useElements();
   const CARD_ELEMENT_OPTIONS = {
     style: {
+      width: "100%",
       base: {
         color: "blue",
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
@@ -54,8 +57,11 @@ const Form = ({ data }) => {
   return (
     <div>
       <form action="#" onSubmit={handleSubmit}>
-        <CardElement options={CARD_ELEMENT_OPTIONS} />
-        <button>confirm order</button>
+        <CardElement
+          className={styles["card-input"]}
+          options={CARD_ELEMENT_OPTIONS}
+        />
+        <button className={styles["button"]}>Buy</button>
       </form>
     </div>
   );

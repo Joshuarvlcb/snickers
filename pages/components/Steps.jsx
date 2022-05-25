@@ -4,8 +4,15 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Form from "./Form";
 import styles from "../../styles/Payment.module.scss";
+import Cookie from "js-cookie";
+import {
+  AiOutlineCheckSquare,
+  AiOutlineEdit,
+  AiOutlineLock,
+} from "react-icons/ai";
+import { RiCheckboxBlankLine } from "react-icons/ri";
 
-const Steps = ({ name, setData, data, step, setStep }) => {
+const Steps = ({ name, setData, data, step, setStep, email }) => {
   const stripeAuth = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
   const countries = [
@@ -278,158 +285,247 @@ const Steps = ({ name, setData, data, step, setStep }) => {
     zip: "",
     country: "",
     phone: "",
-    email: "",
   });
   const [finsihed, setFinsihed] = useState(false);
   if (finsihed) {
-    if (data.account.user && name === "account") {
-      return (
-        <>
-          <h1>checkbox</h1>
-        </>
-      );
-    }
     return (
       <>
-        <h1>checkbox</h1>
-        <h1 onClick={() => setFinsihed(false)}>edit</h1>
+        <div className={styles["step"]}>
+          <div className={styles["name"]}>{name.toUpperCase()}</div>
+          <div className={styles["icons"]}>
+            {data.account.user !== "" && name == "account" ? (
+              ""
+            ) : (
+              <AiOutlineEdit
+                className={styles["edit"]}
+                onClick={() => setFinsihed(false)}
+              />
+            )}
+            <AiOutlineCheckSquare className={styles["check"]} />
+          </div>
+        </div>
       </>
     );
   }
-
+  const isAccount = () => {
+    setFinsihed(true),
+      setData({
+        ...data,
+        account: { user: email },
+      }),
+      setStep(step + 1);
+  };
   return (
     <>
-      <h2>{name}</h2>
-      <h2>{finsihed}</h2>
       {/* conditional rendering */}
       {name === "account" ? (
         <>
           {/* if user is signed in return setFinsihed(true) */}
           {step >= 0 ? (
             <div className={styles["step"]}>
-              <button onClick={() => setFinsihed(true)}>
-                {" "}
-                check in as guest
-              </button>
-              <form
-                action="#"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log(e.target[0].value);
-                  console.log(e.target[1].value);
-                  //update data state
-                  setData({ ...data, account: { user: e.target[0].value } });
-                  setFinsihed(true);
-                  setStep(step + 1);
-                }}
-              >
-                <h1>check out with your sneakers account</h1>
-                <label>email</label>
-                <input required={true} type="text" placeholder="email" />
-                <label>password</label>
-                <input required={true} type="password" placeholder="password" />
-                <button value="submit">contine</button>
-              </form>
+              {Cookie.get("token") ? (
+                isAccount()
+              ) : (
+                <>
+                  <form
+                    action="#"
+                    className={styles["form"]}
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      //update data state
+                      //login
+                      const loggingUser = await axios.post(
+                        "http://localhost:3000/api/v1/auth/login",
+                        {
+                          email: e.target[0].value,
+                          password: e.target[1].value,
+                        }
+                      );
+                      if (!loggingUser) return;
+                      Cookie.set("token", loggingUser.token);
+                      Cookie.set("email", e.target[0].value);
+
+                      setData({
+                        ...data,
+                        account: { user: e.target[0].value },
+                      });
+                      setFinsihed(true);
+                      setStep(step + 1);
+                    }}
+                  >
+                    <div className={styles["title"]}>Account</div>
+
+                    <div className={styles["sub-title"]}>
+                      check out with account
+                    </div>
+                    <input
+                      className={styles["input"]}
+                      required={true}
+                      type="text"
+                      placeholder="email"
+                    />
+                    <input
+                      className={styles["input"]}
+                      required={true}
+                      type="password"
+                      placeholder="password"
+                    />
+                    <button className={styles["button"]} value="submit">
+                      Continue
+                    </button>
+                    <div className={styles["sub-title-margin"]}>
+                      check out as guest
+                    </div>
+                    <button
+                      className={styles["button"]}
+                      onClick={() => {
+                        setFinsihed(true);
+
+                        setStep(step + 1);
+                        setData({
+                          ...data,
+                          account: { user: "guest" },
+                        });
+                      }}
+                    >
+                      Guest checkout
+                    </button>
+                  </form>
+                </>
+              )}
             </div>
           ) : (
-            <h3>closed</h3>
+            <div className={styles["step"]}>
+              <div className={styles["locked"]}>
+                <AiOutlineLock className={styles["lock"]} />
+                <div className={styles["name"]}>{name.toUpperCase()}</div>
+              </div>
+              <RiCheckboxBlankLine className={styles["box"]} />
+            </div>
           )}
         </>
       ) : name === "shipping address" ? (
         <>
           {step >= 1 ? (
-            <form
-              action="#"
-              onSubmit={(e) => {
-                e.preventDefault();
+            <div className={styles["step"]}>
+              <form
+                action="#"
+                className={styles["form"]}
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-                setFinsihed(true);
-                setData({ ...data, shippingData: { ...shipping } });
-                setStep(step + 1);
-              }}
-            >
-              {account === "guest" ? <input type="text" /> : ""}
-              {/* value = cookie || inputState */}
-              <input
-                required={true}
-                type="text"
-                placeholder="full name"
-                value={shipping.name}
-                onChange={(e) => {
-                  setShipping({ ...shipping, name: e.target.value });
-                }}
-              />
-              <input
-                required={true}
-                type="text"
-                placeholder="street address"
-                value={shipping.streetAddress}
-                onChange={(e) => {
-                  setShipping({ ...shipping, streetAddress: e.target.value });
-                }}
-              />
-              <input
-                type="text"
-                placeholder="apartment"
-                value={shipping.apartment}
-                onChange={(e) => {
-                  setShipping({ ...shipping, apartment: e.target.value });
-                }}
-              />
-              <input
-                required={true}
-                type="text"
-                placeholder="city"
-                value={shipping.city}
-                onChange={(e) => {
-                  setShipping({ ...shipping, city: e.target.value });
-                }}
-              />
-              <input
-                required={true}
-                type="text"
-                placeholder="zip code"
-                value={shipping.zip}
-                onChange={(e) => {
-                  setShipping({ ...shipping, zip: e.target.value });
-                }}
-              />
-              <select
-                value={shipping.country}
-                required={true}
-                onChange={(e) => {
-                  setShipping({ ...shipping, country: e.target.value });
+                  setFinsihed(true);
+                  setData({ ...data, shippingData: { ...shipping } });
+                  setStep(step + 1);
                 }}
               >
-                {/* countrys */}
-                {countries.map((name) => {
-                  return <option value={name}>{name}</option>;
-                })}
-              </select>
-              <input
-                required={true}
-                type="text"
-                placeholder="phone number"
-                value={shipping.phone}
-                onChange={(e) => {
-                  setShipping({ ...shipping, phone: e.target.value });
-                }}
-              />
-              <button value="submit">contine</button>
-            </form>
+                <div className={styles["title"]}>Shipping address</div>
+                {account === "guest" ? <input type="text" /> : ""}
+                {/* value = cookie || inputState */}
+                <input
+                  className={styles["input"]}
+                  required={true}
+                  type="text"
+                  placeholder="full name"
+                  value={shipping.name}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, name: e.target.value });
+                  }}
+                />
+                <input
+                  className={styles["input"]}
+                  required={true}
+                  type="text"
+                  placeholder="street address"
+                  value={shipping.streetAddress}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, streetAddress: e.target.value });
+                  }}
+                />
+                <input
+                  className={styles["input"]}
+                  type="text"
+                  placeholder="apartment"
+                  value={shipping.apartment}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, apartment: e.target.value });
+                  }}
+                />
+                <input
+                  className={styles["input"]}
+                  required={true}
+                  type="text"
+                  placeholder="city"
+                  value={shipping.city}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, city: e.target.value });
+                  }}
+                />
+                <input
+                  className={styles["input"]}
+                  required={true}
+                  type="text"
+                  placeholder="zip code"
+                  value={shipping.zip}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, zip: e.target.value });
+                  }}
+                />
+                <select
+                  className={`${styles["input"]} ${styles["padding"]}`}
+                  value={shipping.country}
+                  required={true}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, country: e.target.value });
+                  }}
+                >
+                  {/* countrys */}
+                  {countries.map((name) => {
+                    return <option value={name}>{name}</option>;
+                  })}
+                </select>
+                <input
+                  required={true}
+                  type="text"
+                  className={styles["input"]}
+                  placeholder="phone number"
+                  value={shipping.phone}
+                  onChange={(e) => {
+                    setShipping({ ...shipping, phone: e.target.value });
+                  }}
+                />
+                <button className={styles["button"]} value="submit">
+                  Continue
+                </button>
+              </form>
+            </div>
           ) : (
-            <h3>closed</h3>
+            <div className={styles["step"]}>
+              <div className={styles["locked"]}>
+                <AiOutlineLock className={styles["lock"]} />
+                <div className={styles["name"]}>{name.toUpperCase()}</div>
+              </div>
+              <RiCheckboxBlankLine className={styles["box"]} />
+            </div>
           )}
         </>
       ) : (
         <>
           {/* redirect to stripe payment page */}
           {step >= 2 ? (
-            <Elements stripe={stripeAuth}>
-              <Form data={data} />
-            </Elements>
+            <div className={styles["step-copy"]}>
+              <Elements stripe={stripeAuth}>
+                <Form data={data} />
+              </Elements>
+            </div>
           ) : (
-            <h3>closed</h3>
+            <div className={styles["step"]}>
+              <div className={styles["locked"]}>
+                <AiOutlineLock className={styles["lock"]} />
+                <div className={styles["name"]}>{name.toUpperCase()}</div>
+              </div>
+              <RiCheckboxBlankLine className={styles["box"]} />
+            </div>
           )}
         </>
       )}

@@ -27,12 +27,16 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
 
     */
   let pageProps = {};
-  const { token } = parseCookies(ctx);
+  const { token, email } = parseCookies(ctx);
   const protectedRoutes = ["/signup", "/login"];
+
   if (token && protectedRoutes.includes(ctx.pathname)) redirect(ctx, "/");
   if (Component.getInitialProps)
     pageProps = await Component.getInitialProps(ctx);
-
+  if (token) {
+    const user = await axios.post(baseURL + "auth", { email: email });
+    pageProps.email = user.email;
+  }
   const results = await axios.get(
     baseURL + "shoes/popular",
     {},
