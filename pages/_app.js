@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import Layout from "./components/Layout";
 import { redirect, baseURL } from "./util/auth";
 import axios from "axios";
+
 import { parseCookies } from "nookies";
 function MyApp({ Component, pageProps }) {
   return (
@@ -26,16 +27,48 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
     return pageProps
 
     */
+  /*
+   protected routes if user is logged in protected routes will be login and signup
+   if user is not logged in protected routes will be / wishlist cart payment...
+
+   ??I need to check first if the user is logged in?
+    yes that way I know whick routes will be protected
+
+    use a variable to let me know if user is logged in 
+    if he is protected routes = login sign
+    else protedRoutes = [all pages except login & signup]
+
+
+    check to see if pathname = protected routes 
+      if true redirect them to either login or home depeding on the variable
+   */
   let pageProps = {};
   const { token, email } = parseCookies(ctx);
-  const protectedRoutes = ["/signup", "/login"];
+  let loggedIn = token ? true : false;
+  let protectedRoutes;
+  if (loggedIn) {
+    protectedRoutes = ["/signup", "/login"];
+  } else {
+    protectedRoutes = [
+      "/",
+      "/wishlist",
+      "/payment",
+      "/sneakers",
+      "/cart",
+      "/[shoe]",
+    ];
+  }
 
-  if (token && protectedRoutes.includes(ctx.pathname)) redirect(ctx, "/");
+  if (protectedRoutes.includes(ctx.pathname)) {
+    if (loggedIn) redirect(ctx, "/");
+    if (!loggedIn) redirect(ctx, "/login");
+  }
   if (Component.getInitialProps)
     pageProps = await Component.getInitialProps(ctx);
   if (token) {
     const user = await axios.post(baseURL + "auth", { email: email });
-    pageProps.email = user.email;
+    const { _id, username, email: e, cart, wishlist } = user.data;
+    pageProps.user = { _id, username, email: e, cart, wishlist };
   }
   const results = await axios.get(
     baseURL + "shoes/popular",

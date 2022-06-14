@@ -373,7 +373,9 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
                     <button className={styles["button"]} value="submit">
                       Continue
                     </button>
-                    <div className={styles["sub-title-margin"]}>
+                    <div
+                      className={styles["sub-title-margin"]}
+                    >
                       check out as guest
                     </div>
                     <button

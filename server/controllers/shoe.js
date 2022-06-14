@@ -6,9 +6,7 @@ const getShoes = async (req, res) => {
     const shoe = await Shoe.find({});
     const { brand, low, high, model, ascending, descending, popular, newest } =
       req.query;
-
-    console.log(ascending, descending, popular, newest, brand);
-
+    console.log(req.query);
     if (brand) {
       shoe.forEach((obj) => {
         if (brand.toLowerCase() === obj.brand.toLowerCase()) shoes.push(obj);
@@ -19,6 +17,7 @@ const getShoes = async (req, res) => {
         if (model.toLowerCase() === obj.model.toLowerCase()) shoes.push(obj);
       });
     }
+    if (shoes.length === 0) shoes = shoe;
     if (high || low) {
       /*
       if we have other filters
@@ -26,16 +25,9 @@ const getShoes = async (req, res) => {
       else 
       filter Shoe collection
       */
-      if (model || brand) {
-        shoes = shoes.filter((obj) => obj.price >= +low && obj.price <= +high);
-        if (shoes.length == 0) return res.status(205).json({ shoes });
-      } else {
-        shoes = shoe.filter((obj) => {
-          return obj.price >= +low && obj.price <= +high;
-        });
-      }
+      shoes = shoes.filter((obj) => obj.price >= +low && obj.price <= +high);
+      if (shoes.length == 0) return res.status(205).json({ shoes });
     }
-    if (shoes.length === 0) shoes = shoe;
     // if (gender) {
     //   if (gender === "men" || gender === "women") {
     //     shoe.forEach((obj) => {
@@ -56,9 +48,9 @@ const getShoes = async (req, res) => {
         for (let [i, obj] of Object.entries(shoes)) {
           if (index >= i) {
             if (shoes[index].price < obj.price) {
-              let temp = shoes[index].price;
-              shoes[index].price = obj.price;
-              shoes[i].price = temp;
+              let temp = shoes[index];
+              shoes[index] = obj;
+              shoes[i] = temp;
             }
           }
         }
@@ -72,9 +64,9 @@ const getShoes = async (req, res) => {
         for (let [i, obj] of Object.entries(shoes)) {
           if (index >= i) {
             if (shoes[index].price > obj.price) {
-              let temp = shoes[index].price;
-              shoes[index].price = obj.price;
-              shoes[i].price = temp;
+              let temp = shoes[index];
+              shoes[index] = obj;
+              shoes[i] = temp;
             }
           }
         }

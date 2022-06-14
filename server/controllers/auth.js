@@ -1,14 +1,34 @@
 const UserModel = require("../models/User");
-//model
+const CartModel = require("../models/Cart");
+const WishlistModel = require("../models/Wishlist");
 
 const register = async (req, res) => {
   try {
     console.log(req.body);
     const { username, email, password } = req.body;
+    if (password.length < 5)
+      return res.status(404).send("password needs to be at least 5 characters");
+
     if (!username || !email || !password)
       return res.status(404).send("you need a username password and email!");
+    //??how can i see my cart pass in the cart id
 
-    const newUser = await UserModel.create({ username, email, password });
+    const newUser = await UserModel.create({
+      username,
+      email,
+      password,
+      // cart: cart._id,
+      // wishlist: wishList._id,
+    });
+    const cart = await CartModel.create({ user: newUser._id, products: [] });
+    const wishList = await WishlistModel.create({
+      user: newUser._id,
+      wishlist: [],
+    });
+    newUser.cart = cart._id;
+    newUser.wishlist = wishList._id;
+    newUser.save();
+    console.log(newUser);
     const token = await newUser.createJwt();
     return res.status(200).json({ user: newUser, token });
   } catch (err) {
@@ -39,7 +59,6 @@ const getProfile = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await UserModel.findOne({ email: email });
-    console.log(user);
     return res.status(200).json(user);
   } catch (err) {
     console.log(err);

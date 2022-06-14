@@ -9,7 +9,63 @@
 }
 
 html {
-  margin-top: 120px;
+  margin-top: 170px;
   background-color: rgb(241, 241, 241);
   /* margin-bottom: ?150px; */
+}
+.StripeElement {
+  height: 40px;
+  padding: 10px 12px;
+  width: 100%;
+  color: #32325d;
+  background-color: white;
+  border: 1px solid rgb(221, 221, 255);
+  border-radius: 4px;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+.shoe_container {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  grid-gap: 2rem;
+  justify-content: center;
+}
+.shoe {
+  cursor: pointer;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.info {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-top: 1rem;
+}
+.brand {
+  font-size: 12px;
+  color: grey;
+}
+.name {
+  width: 200px;
+  font-size: 15px;
+}
+.pic {
+  height: 150px;
 }

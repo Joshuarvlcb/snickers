@@ -1,8 +1,5 @@
 .auth {
   font-family: "Nunito", sans-serif;
-
-  height: 100vh;
-  min-height: 100vh;
   background-color: rgb(241, 241, 241);
 }
 
@@ -19,6 +16,7 @@
 }
 .login-container,
 .signup-container {
+  position: relative;
   background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
@@ -29,6 +27,8 @@
   padding-bottom: 2rem;
 }
 .text {
+  width: 80%;
+  text-align: center;
   font-weight: 600;
   margin-top: 0;
 }

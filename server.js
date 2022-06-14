@@ -20,13 +20,14 @@ const cart = require("./server/routes/cart");
 const search = require("./server/routes/search");
 const payment = require("./server/routes/payment");
 const email = require("./server/routes/email");
-
+const wishlist = require("./server/routes/wishlist");
 app.use("/api/v1/auth", login);
 app.use("/api/v1/search", search);
 app.use("/api/v1/email", email);
 app.use("/api/v1/payment", payment);
 app.use("/api/v1/cart", cart);
 app.use("/api/v1/shoes", shoes);
+app.use("/api/v1/wishlist", wishlist);
 connectDB();
 
 //start server!!

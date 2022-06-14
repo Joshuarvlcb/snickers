@@ -4,14 +4,31 @@ import axios from "axios";
 import { baseURL } from "../util/auth";
 import { ImSearch } from "react-icons/im";
 import { AiOutlineCloseSquare } from "react-icons/ai";
-
+import { useRouter } from "next/router";
 // import { baseURL } from "../util/auth";
 // import axios from "axios";
 const Search = ({ popularShoes }) => {
   const [showModal, setShowModal] = useState(false);
   const [shoe, setShoe] = useState("");
   const [shoes, setShoes] = useState([]);
+  const router = useRouter();
   let cancel;
+  const [windowSize, setWindowSize] = useState(0);
+
+  const width = () => {
+    if (typeof window !== "undefined") {
+      const getWidth = () => {
+        setWindowSize(window.innerWidth);
+      };
+      window.addEventListener("resize", getWidth);
+      setWindowSize(window.innerWidth);
+    }
+  };
+  useEffect(() => {
+    width();
+  }, []);
+
+  // console.log(window.clien)
   /*
         jsx 
         input
@@ -23,9 +40,18 @@ const Search = ({ popularShoes }) => {
         use axios canceler 
         create regex shoe controller 
     */
-  useEffect(() => {
-    console.log(showModal);
-  }, [showModal]);
+
+  /*
+        ??how can I remove search icon when modal is not active in mobile
+        check if window <= 800 && modal is true display search icon
+        if window <= 800 && modal is false dont show icon 
+        else show it
+
+
+        toggle class that has width 70px when modal is not active 
+
+        */
+
   const getShoes = async (value) => {
     try {
       //!!
@@ -44,6 +70,9 @@ const Search = ({ popularShoes }) => {
     <div className={styles.search}>
       <div className={styles["input-container"]}>
         <input
+          style={{
+            width: `${windowSize <= 800 && !showModal ? "135px" : "200px"}`,
+          }}
           placeholder="Search"
           className={`${styles["input"]} ${
             showModal ? styles["remove-border"] : ""
@@ -57,17 +86,23 @@ const Search = ({ popularShoes }) => {
           }}
           onClick={() => {
             setShowModal(true);
-            document.body.style.setProperty("overflow", "hidden");
+            document.body.style.setProperty("overflow-y", "hidden");
           }}
         />
-        <ImSearch className={styles["search"]} />
+        {windowSize <= 800 && showModal ? (
+          <ImSearch className={styles["search"]} />
+        ) : windowSize <= 800 && !showModal ? (
+          ""
+        ) : (
+          <ImSearch className={styles["search"]} />
+        )}
         {showModal && (
           <>
             <AiOutlineCloseSquare
               className={styles.close}
               onClick={() => {
                 setShowModal(false);
-                document.body.style.setProperty("overflow", "scroll");
+                document.body.style.setProperty("overflow-y", "scroll");
               }}
             />
           </>
@@ -82,7 +117,14 @@ const Search = ({ popularShoes }) => {
               {shoe === "" ? (
                 popularShoes.map((shoe) => {
                   return (
-                    <div className={styles.shoe}>
+                    <div
+                      className={styles.shoe}
+                      onClick={() => {
+                        router.push("/" + shoe._id);
+                        setShowModal(false);
+                        document.body.style.setProperty("overflow-y", "scroll");
+                      }}
+                    >
                       <img
                         src={shoe.pic}
                         alt=""
@@ -95,7 +137,14 @@ const Search = ({ popularShoes }) => {
               ) : shoe !== "" && shoes.length > 0 ? (
                 shoes.map((shoe) => {
                   return (
-                    <div className={styles.shoe}>
+                    <div
+                      className={styles.shoe}
+                      onClick={() => {
+                        router.push("/" + shoe._id);
+                        setShowModal(false);
+                        document.body.style.setProperty("overflow-y", "scroll");
+                      }}
+                    >
                       <img
                         src={shoe.pic}
                         alt=""

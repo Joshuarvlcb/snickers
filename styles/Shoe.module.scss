@@ -1,12 +1,12 @@
 .shoe-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100vw;
   font-family: "Nunito", sans-serif;
   padding: 0 3rem;
 
   .shoe-img {
-    width: 50%;
+    width: 45%;
     .image {
       width: 100%;
     }
@@ -15,7 +15,6 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    padding-left: 5rem;
 
     .shoe-brand {
       color: rgb(77, 77, 77);
@@ -38,6 +37,7 @@
     }
     .button-container {
       display: flex;
+      justify-content: center;
       outline: none;
       margin-bottom: 2rem;
 
@@ -79,13 +79,16 @@
     .size-container {
       margin-bottom: 2rem;
 
-      display: grid;
-      grid-template-columns: repeat(5, 100px);
-      grid-gap: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
       .size {
         cursor: pointer;
         height: 50px;
         width: 100px;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
         border: solid black 2px;
         display: flex;
         justify-content: center;
@@ -100,6 +103,32 @@
         background-color: black;
         font-weight: bold;
         color: white;
+      }
+    }
+  }
+}
+@media (max-width: 1050px) {
+  .shoe-container {
+    flex-direction: column;
+    align-items: center;
+
+    .info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      .shoe-name {
+        text-align: center;
+      }
+      .button-container {
+        flex-wrap: wrap;
+        .cart-button,
+        .heart-button {
+          width: 80%;
+          padding: 1.4rem 2rem;
+          margin: 0 auto;
+          margin-bottom: 1rem;
+        }
       }
     }
   }

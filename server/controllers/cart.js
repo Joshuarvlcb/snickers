@@ -9,6 +9,7 @@ delete cart
 
 get cart by id
 */
+const { populate } = require("sneaks-api/models/Sneaker");
 const CartModel = require("../models/Cart");
 
 const createCart = async (req, res) => {
@@ -51,21 +52,26 @@ const updateCart = async (req, res) => {
 };
 const addToCart = async (req, res) => {
   try {
+    /* */
     const { cartId } = req.params;
-    const { product, quantity } = req.body;
-    if (!cartId || !product || !quantity)
+    const { product: p } = req.body;
+    if (!cartId || !p)
       return res.status(404).send("you need a cartId or product or quantity");
-    //!!populate
-    const cart = await CartModel.findById(cartId).populate("products.product");
+
+    const cart = await CartModel.findById(cartId);
+    console.log(cart);
     if (!cart) return res.status(401).send("cart does not exist");
-    for (let { product: p } of cart.products) {
-      if (p._id == product)
-        return res.status(410).send("this product already exist in cart");
+    for (let { product } of cart.products) {
+      if (product.toString() == p) {
+        return res.status(200).send("product already exist");
+      }
     }
+
     cart.products = [...cart.products, req.body];
+    cart.populate("products.product");
     await cart.save();
 
-    return res.status(200).send(cart);
+    return res.status(200).send({ cart, length: cart.length });
   } catch (err) {
     console.log(err);
     return res.status(401).send("error @ addToCart");
@@ -74,10 +80,10 @@ const addToCart = async (req, res) => {
 const getCart = async (req, res) => {
   try {
     const { cartId } = req.params;
-    const cart = await CartModel.findById(cartId);
+    const cart = await CartModel.findById(cartId).populate("products.product");
     if (!cart) return res.status(404).send("cart does not exist");
 
-    return res.status(200).json(cart); //:)
+    return res.status(207).json({ cart: cart, length: cart.products.length });
   } catch (err) {
     console.log(err);
     return res.status(401).send("error @ getCart");
@@ -86,7 +92,9 @@ const getCart = async (req, res) => {
 
 const removeItemFromCart = async (req, res) => {
   try {
-    const { cartId, itemId: product } = req.params;
+    const { cartId, productId: product } = req.params;
+
+    console.log(cartId, product);
     if (!cartId || !product)
       return res.status(404).send("you need a cartId or product");
 
@@ -98,7 +106,7 @@ const removeItemFromCart = async (req, res) => {
       console.log(p.toString(), product);
       return p.toString() !== product;
     });
-
+    cart.populate("products.product");
     await cart.save();
     return res.status(200).send({ cart });
   } catch (err) {
@@ -110,8 +118,10 @@ const removeItemFromCart = async (req, res) => {
 const deleteCart = async (req, res) => {
   try {
     const { cartId } = req.params;
-    const cart = await CartModel.findOneAndDelete({ _id: cartId });
+    const cart = await CartModel.findById(cartId);
     if (!cart) return res.status(404).send("cart does not exist");
+    cart.products = [];
+    cart.save();
     return res.status(200).json({ cart: { products: [] } });
   } catch (err) {
     console.log(err);

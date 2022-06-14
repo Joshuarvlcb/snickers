@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { signup as createUser } from "./util/loginActions";
 import Link from "next/link";
 import { IoCloseCircleOutline } from "react-icons/io5";
-
 import styles from "../styles/Auth.module.scss";
 const signup = () => {
   /*
@@ -32,7 +31,13 @@ const signup = () => {
   return (
     <div className={styles["auth"]}>
       <div className={styles["form-container"]}>
-        <div className={styles["signup-container"]}>
+        <div
+          className={styles["signup-container"]}
+          style={{
+            marginTop: `${error ? "4rem" : "0"}`,
+            marginBottom: `${error ? "4rem" : "0"}`,
+          }}
+        >
           <h1 className={styles["title"]}>Create account</h1>
           <p className={styles["text"]}>
             Already have an account?{" "}
@@ -69,15 +74,7 @@ const signup = () => {
                 setSignupData({ ...signupData, username: e.target.value });
               }}
             />
-            <input
-              className={styles["input"]}
-              required={true}
-              type="text"
-              placeholder="name"
-              onChange={(e) => {
-                setSignupData({ ...signupData, username: e.target.value });
-              }}
-            />
+
             <input
               className={styles["input"]}
               required={true}

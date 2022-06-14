@@ -82,4 +82,30 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .icons {
+    display: flex;
+    margin-bottom: 1.6rem;
+    .circle {
+      cursor: pointer;
+      margin: 0 1rem;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      background-color: white;
+      border-radius: 50%;
+      .icon {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .copy-right {
+    font-weight: 600;
+    color: white;
+  }
 }

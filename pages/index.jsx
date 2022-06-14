@@ -16,7 +16,14 @@ function Home({ popular, newest }) {
         <h1 className={styles["title"]}>Popular</h1>
         <div className={styles["shoe_container"]}>
           {popular.popularShoes.slice(0, 8).map((shoe) => {
-            return <Shoe name={shoe.name} brand={shoe.brand} pic={shoe.pic} />;
+            return (
+              <Shoe
+                name={shoe.name}
+                brand={shoe.brand}
+                id={shoe._id}
+                pic={shoe.pic}
+              />
+            );
           })}
         </div>
         <LoadButton />

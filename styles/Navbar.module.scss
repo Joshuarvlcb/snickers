@@ -21,7 +21,7 @@
     .link {
       cursor: pointer;
       list-style: none;
-      font-size: 1.8rem;
+      font-size: 2rem;
       margin-left: 1rem;
       display: flex;
       align-items: center;
@@ -44,6 +44,7 @@
 .modal {
   overflow-y: scroll;
   overflow-x: hidden;
+  z-index: 100;
   font-family: "Nunito", sans-serif;
 
   height: 80vh;
@@ -145,4 +146,87 @@
 }
 .title {
   margin-left: 2rem;
+}
+.dropdown-link {
+  display: none;
+}
+@media (max-width: 800px) {
+  .navbar {
+    justify-content: space-between;
+    .none {
+      display: none !important;
+    }
+
+    .search {
+      .input-container {
+        margin: 0.5rem;
+
+        .input {
+          background-color: transparent;
+          border: 0px;
+          color: rgb(0, 0, 0);
+          font-weight: bold;
+          font-weight: 500;
+          line-height: 32px;
+          outline: 0px;
+          padding: 0rem 2.5rem;
+          // width: 70px;
+          &:focus {
+            display: flex;
+            align-items: center;
+            width: 250px;
+            font-family: "Nunito", sans-serif;
+            border-radius: 3px;
+            outline: none;
+
+            font-size: 17px;
+          }
+        }
+
+        ::placeholder {
+          margin-top: 0.5rem;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .dropdown-content {
+      min-width: 110px;
+      left: -4rem;
+    }
+
+    .dropdown-link {
+      margin: 0 3rem;
+
+      font-family: "Nunito", sans-serif;
+      font-weight: bold;
+
+      position: relative;
+      display: inline-block;
+    }
+    .links {
+      margin-top: 2rem;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .link {
+        margin: 0;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .dropdown-link:hover .dropdown-content {
+      display: block;
+    }
+    .dropdown .dropdown-content {
+      display: none !important;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block !important;
+    }
+  }
 }

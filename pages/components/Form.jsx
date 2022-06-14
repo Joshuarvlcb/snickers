@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import styles from "../../styles/Payment.module.scss";
-
 import { baseURL } from "../util/auth";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 const Form = ({ data }) => {
@@ -41,8 +40,8 @@ const Form = ({ data }) => {
     /*
     post request to my server;
     */
+    if (!token) return;
     let email = data.account.email;
-
     const result = await axios.post(`${baseURL}payment`, {
       token: token.id,
       price,
@@ -56,12 +55,12 @@ const Form = ({ data }) => {
   };
   return (
     <div>
-      <form action="#" onSubmit={handleSubmit}>
+      <form action="#" onSubmit={handleSubmit} className={styles["payment"]}>
         <CardElement
           className={styles["card-input"]}
           options={CARD_ELEMENT_OPTIONS}
         />
-        <button className={styles["button"]}>Buy</button>
+        <button className={styles["buy"]}>Buy</button>
       </form>
     </div>
   );

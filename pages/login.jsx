@@ -8,6 +8,9 @@ const login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
   useEffect(() => {
+    console.log(error);
+  }, [error]);
+  useEffect(() => {
     setLoginData({
       ...loginData,
       email: Cookie.get("email") ? Cookie.get("email") : "",
@@ -17,7 +20,13 @@ const login = () => {
   return (
     <div className={styles["auth"]}>
       <div className={styles["form-container"]}>
-        <div className={styles["login-container"]}>
+        <div
+          className={styles["login-container"]}
+          style={{
+            marginTop: `${error ? "4rem" : "0"}`,
+            marginBottom: `${error ? "4rem" : "0"}`,
+          }}
+        >
           <h1 className={styles["title"]}>Sign in</h1>
           <p className={styles["text"]}>
             Dont have an account?{" "}

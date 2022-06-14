@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
 
-/*
-products quatity
-*/
-const Cart = mongoose.Schema({
-  //get reference from shoes model
+const Wishlist = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  products: [
+  wishlist: [
     {
-      product: {
+      shoe: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Shoe",
         required: true,
@@ -20,5 +16,4 @@ const Cart = mongoose.Schema({
     },
   ],
 });
-
-module.exports = mongoose.model("Cart", Cart);
+module.exports = mongoose.model("Wishlist", Wishlist);

@@ -15,6 +15,7 @@ export const login = async (data, setError) => {
     }
   } catch (err) {
     console.log(err, "error in login function");
+
     setError(true);
   }
 };

@@ -6,7 +6,6 @@ const UserModel = mongoose
   .Schema({
     username: {
       type: String,
-      unique: true,
       required: true,
     },
 
@@ -20,6 +19,14 @@ const UserModel = mongoose
     password: {
       type: String,
       required: true,
+    },
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cart",
+    },
+    wishlist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wishlist",
     },
   })
   .pre("save", async function (next) {
