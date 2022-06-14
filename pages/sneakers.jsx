@@ -71,8 +71,6 @@ const sneakers = () => {
   const [brand, setBrand] = useState(false);
   const [price, setPrice] = useState(false);
   useEffect(() => {
-    console.log(filter);
-    console.log(sort);
     /*
     set results
     
@@ -196,7 +194,6 @@ const sneakers = () => {
               <button
                 className={styles["button"]}
                 onClick={(e) => {
-                  console.log(+high.value, +low.value);
                   if (!low.value || !high.value) return;
                   setFilter({
                     ...filter,
@@ -221,7 +218,6 @@ const sneakers = () => {
               name="sort"
               onChange={(e) => {
                 if (e.target.value == "e.target.value") return;
-                console.log(e.target.value);
                 const value = e.target.value;
                 //get the whole object loop over it to create new object update state
                 const obj = {};
@@ -247,9 +243,10 @@ const sneakers = () => {
         ) : (
           <>
             <div className={styles["results_container"]}>
-              {results?.map((shoe) => {
+              {results?.map((shoe, i) => {
                 return (
                   <Shoe
+                    key={i}
                     id={shoe._id}
                     pic={shoe.pic}
                     brand={shoe.brand}

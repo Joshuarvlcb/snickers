@@ -2,11 +2,16 @@ import "../styles/globals.css";
 import Layout from "./components/Layout";
 import { redirect, baseURL } from "./util/auth";
 import axios from "axios";
+import Head from "next/head";
 
 import { parseCookies } from "nookies";
 function MyApp({ Component, pageProps }) {
   return (
     <Layout popularShoes={pageProps.popular.popularShoes}>
+      <Head>
+        <title>Snickers</title>
+        {/* <link rel="icon" type="image/x-icon" href="/images/favicon.ico" /> */}
+      </Head>
       <Component {...pageProps} />
     </Layout>
   );

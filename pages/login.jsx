@@ -7,9 +7,7 @@ import styles from "../styles/Auth.module.scss";
 const login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+
   useEffect(() => {
     setLoginData({
       ...loginData,

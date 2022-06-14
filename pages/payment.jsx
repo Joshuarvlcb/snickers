@@ -30,7 +30,6 @@ const payment = ({ email, user }) => {
       phoneNumber: "",
     },
   });
-  const router = useRouter();
   useEffect(() => {
     const getTotal = async () => {
       const cart = await getCart(user.cart);
@@ -47,9 +46,10 @@ const payment = ({ email, user }) => {
   return (
     <div className={styles["payment-container"]}>
       <div className={styles["steps-container"]}>
-        {["account", "shipping address", "payment"].map((name) => {
+        {["account", "shipping address", "payment"].map((name, i) => {
           return (
             <Steps
+              key={i}
               name={name}
               setData={setData}
               data={data}
@@ -66,9 +66,9 @@ const payment = ({ email, user }) => {
         </div>
         <div className={styles["shoes"]}>
           {cart.length >= 1 ? (
-            cart.map(({ product }) => {
+            cart.map(({ product }, i) => {
               return (
-                <div className={styles["shoe"]}>
+                <div className={styles["shoe"]} key={i}>
                   <img
                     src={product.pic}
                     className={styles["image"]}

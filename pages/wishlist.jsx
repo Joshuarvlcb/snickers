@@ -36,9 +36,9 @@ const wishlist = ({ user, wishlist }) => {
       <h1 className={styles["title"]}>Wishlist</h1>
       <div className={styles["cart-container"]}>
         {products.length >= 1 ? (
-          products.map((shoe) => {
+          products.map((shoe, i) => {
             return (
-              <div className={styles["product"]}>
+              <div className={styles["product"]} key={i}>
                 <Shoe
                   id={shoe.shoe._id}
                   pic={shoe.shoe.pic}

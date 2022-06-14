@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/Navbar.module.scss";
 import Link from "next/link";
 import Search from "./Search";
@@ -6,12 +6,18 @@ import Cookie from "js-cookie";
 import { MdOutlineAccountBox, MdOutlineShoppingBag } from "react-icons/md";
 import { BiBookHeart } from "react-icons/bi";
 import logo from "./shoe-logo.png";
+import { useRouter } from "next/router";
 
 // MdAccountBox
 //BsBookmarkHeart
 //MdOutlineShoppingBag
 //GiConverseShoe
 const Navbar = ({ popularShoes }) => {
+  const [cookie, setCookie] = useState("");
+  const router = useRouter();
+  useEffect(() => {
+    setCookie(Cookie.get("token"));
+  }, []);
   return (
     <nav className={styles.navbar}>
       <Search popularShoes={popularShoes} />
@@ -42,11 +48,11 @@ const Navbar = ({ popularShoes }) => {
                   <Link href={"/login"}>
                     <a
                       onClick={() => {
-                        if (!Cookie.get("token")) return;
+                        if (!cookie) return;
                         Cookie.remove("token");
                       }}
                     >
-                      {Cookie.get("token") ? "Sign out" : "Sign in"}
+                      {cookie ? "Sign out" : "Sign in"}
                     </a>
                   </Link>
                 </div>
@@ -54,12 +60,16 @@ const Navbar = ({ popularShoes }) => {
             </li>
             <li className={styles.link}>
               <Link href="/wishlist">
-                <BiBookHeart className={styles.link} />
+                <>
+                  <BiBookHeart className={styles.link} />
+                </>
               </Link>
             </li>
             <li className={styles.link}>
               <Link href="/cart">
-                <MdOutlineShoppingBag className={styles.link} />
+                <>
+                  <MdOutlineShoppingBag className={styles.link} />
+                </>
               </Link>
             </li>
           </ul>
@@ -84,11 +94,11 @@ const Navbar = ({ popularShoes }) => {
               <Link href={"/login"}>
                 <a
                   onClick={() => {
-                    if (!Cookie.get("token")) return;
+                    if (!cookie) return;
                     Cookie.remove("token");
                   }}
                 >
-                  {Cookie.get("token") ? "Sign out" : "Sign in"}
+                  {cookie ? "Sign out" : "Sign in"}
                 </a>
               </Link>
             </div>
@@ -96,12 +106,19 @@ const Navbar = ({ popularShoes }) => {
         </li>
         <li className={styles.link}>
           <Link href="/wishlist">
-            <BiBookHeart className={styles.link} />
+            <>
+              <BiBookHeart className={styles.link} />
+            </>
           </Link>
         </li>
         <li className={styles.link}>
           <Link href="/cart">
-            <MdOutlineShoppingBag className={styles.link} />
+            <>
+              <MdOutlineShoppingBag
+                className={styles.link}
+                onClick={() => router.push("/cart")}
+              />
+            </>
           </Link>
         </li>
       </ul>

@@ -4,7 +4,6 @@ export const getShoes = async (
   { brand, model, price: { low, high } },
   { popular, ascending, descending, newest }
 ) => {
-  console.log(brand, model, high, low, popular, ascending, descending, newest);
   try {
     let string = "?";
     /*
@@ -42,7 +41,6 @@ export const getShoes = async (
     for (let key in brand) {
       if (brand[key]) querys.push("brand");
     }
-    console.log(querys);
     [
       `model=${model}&`,
       `high=${high}&`,
@@ -52,8 +50,6 @@ export const getShoes = async (
       `descending=${descending}&`,
       `newest=${newest}&`,
     ].forEach((param, i) => {
-      console.log(param.split("=")[0]);
-
       if (querys.find((q) => q === param.split("=")[0])) {
         string += param;
       }
@@ -74,9 +70,7 @@ export const getShoes = async (
       }
     }
 
-    console.log(string);
     const results = await axios.get(`${baseURL}shoes${string}`);
-    console.log(results.data);
     return results.data;
   } catch (err) {
     console.log(err, "error in getting shoes");

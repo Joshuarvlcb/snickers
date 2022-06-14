@@ -116,7 +116,7 @@ product state
         <div className={styles["shoe-name"]}>{shoe.name}</div>
         <div className={styles["shoe-price"]}>${shoe.price}</div>
         <div className={styles["size-container"]}>
-          {shoeSizes.map((size) => {
+          {shoeSizes.map((size, i) => {
             /*
             remove and add clicked class
             
@@ -125,7 +125,9 @@ product state
 
             to add
             */
-            return <Size size={size} state={sizeValue} setSize={setSize} />;
+            return (
+              <Size size={size} state={sizeValue} setSize={setSize} key={i} />
+            );
           })}
         </div>
         <div className={styles["button-container"]}>

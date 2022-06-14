@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -276,6 +276,18 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
 
 
    */
+  const [Account, setAccount] = useState(true);
+  useEffect(() => {
+    if (Cookie.get("token") && name == "account") {
+      setData({
+        ...data,
+        account: { user: email },
+      }),
+        setStep(step + 1);
+      setAccount(false);
+      setFinsihed(true);
+    }
+  }, []);
   let account = useRef();
   const [shipping, setShipping] = useState({
     name: "",
@@ -307,14 +319,27 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
       </>
     );
   }
-  const isAccount = () => {
-    setFinsihed(true),
-      setData({
-        ...data,
-        account: { user: email },
-      }),
-      setStep(step + 1);
-  };
+
+  // const isAccount = () => {
+  //   /*
+  //   how can the step render and then update state from payment
+
+  //   have a state that will determine if we want to skip account
+
+  //   ??how can we do that
+  //   in useEffect the first render we want to see if the user has a token
+  //   if so
+  //   call functions
+  //   then update state
+
+  //   */
+  //   setFinsihed(true),
+  //     setData({
+  //       ...data,
+  //       account: { user: email },
+  //     }),
+  //     setStep(step + 1);
+  // };
   return (
     <>
       {/* conditional rendering */}
@@ -323,8 +348,8 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
           {/* if user is signed in return setFinsihed(true) */}
           {step >= 0 ? (
             <div className={styles["step"]}>
-              {Cookie.get("token") ? (
-                isAccount()
+              {Account ? (
+                ""
               ) : (
                 <>
                   <form
@@ -373,9 +398,7 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
                     <button className={styles["button"]} value="submit">
                       Continue
                     </button>
-                    <div
-                      className={styles["sub-title-margin"]}
-                    >
+                    <div className={styles["sub-title-margin"]}>
                       check out as guest
                     </div>
                     <button
@@ -483,7 +506,11 @@ const Steps = ({ name, setData, data, step, setStep, email }) => {
                 >
                   {/* countrys */}
                   {countries.map((name) => {
-                    return <option value={name}>{name}</option>;
+                    return (
+                      <option key={name} value={name}>
+                        {name}
+                      </option>
+                    );
                   })}
                 </select>
                 <input
