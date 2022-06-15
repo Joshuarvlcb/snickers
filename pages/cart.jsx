@@ -121,7 +121,7 @@ const Cart = ({ cart, user }) => {
 
 export default Cart;
 
-Cart.getInitialProps = async (ctx, component) => {
+Cart.getInitialProps = async (ctx) => {
   try {
     const { token, email } = parseCookies(ctx);
     if (token) {

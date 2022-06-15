@@ -98,7 +98,7 @@ const Wishlist = ({ user, wishlist }) => {
 
 export default Wishlist;
 
-wishlist.getInitialProps = async (ctx) => {
+Wishlist.getInitialProps = async (ctx) => {
   try {
     const { token, email } = parseCookies(ctx);
     if (token) {
