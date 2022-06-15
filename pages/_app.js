@@ -49,25 +49,25 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
    */
   let pageProps = {};
   const { token, email } = parseCookies(ctx);
-  // let loggedIn = token ? true : false;
-  // let protectedRoutes
-  // if (loggedIn) {
-  //   protectedRoutes = ["/signup", "/login"];
-  // } else {
-  //   protectedRoutes = [
-  //     "/",
-  //     "/wishlist",
-  //     "/payment",
-  //     "/sneakers",
-  //     "/cart",
-  //     "/[shoe]",
-  //   ];
-  // }
+  let loggedIn = token ? true : false;
+  let protectedRoutes;
+  if (loggedIn) {
+    protectedRoutes = ["/signup", "/login"];
+  } else {
+    protectedRoutes = [
+      "/",
+      "/wishlist",
+      "/payment",
+      "/sneakers",
+      "/cart",
+      "/[shoe]",
+    ];
+  }
 
-  // if (protectedRoutes.includes(ctx.pathname)) {
-  //   if (loggedIn) redirect(ctx, "/");
-  //   if (!loggedIn) redirect(ctx, "/login");
-  // }
+  if (protectedRoutes.includes(ctx.pathname)) {
+    if (loggedIn) redirect(ctx, "/");
+    if (!loggedIn) redirect(ctx, "/login");
+  }
   if (Component.getInitialProps)
     pageProps = await Component.getInitialProps(ctx);
   if (token) {
