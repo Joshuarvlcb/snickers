@@ -75,24 +75,8 @@ MyApp.getInitialProps = async ({ ctx, Component }) => {
     const { _id, username, email: e, cart, wishlist } = user.data;
     pageProps.user = { _id, username, email: e, cart, wishlist };
   }
-  const results = await axios.get(
-    baseURL + "shoes/popular",
-    {},
-    {
-      headers: {
-        authorization: "Bearer " + token,
-      },
-    }
-  );
-  const newest = await axios.get(
-    baseURL + "shoes/newest",
-    {},
-    {
-      headers: {
-        authorization: "Bearer " + token,
-      },
-    }
-  );
+  const results = await axios.get(baseURL + "shoes/popular");
+  const newest = await axios.get(baseURL + "shoes/newest");
   pageProps.popular = results.data;
   pageProps.newest = newest.data;
   return { pageProps };
