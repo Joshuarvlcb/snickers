@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Steps from "./components/Steps";
 import styles from "../styles/Payment.module.scss";
 import { useRouter } from "next/router";
-import { getCart } from "../util/cartActions";
+import { getCart } from "./util/cartActions";
 /*
 step component
 return jsx

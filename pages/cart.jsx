@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { baseURL } from "../util/auth";
-import { getCart, deleteProduct, deleteCart } from "../util/cartActions";
+import { baseURL } from "./util/auth";
+import { getCart, deleteProduct, deleteCart } from "./util/cartActions";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import Link from "next/link";

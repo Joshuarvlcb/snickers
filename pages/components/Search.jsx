@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/Navbar.module.scss";
 import axios from "axios";
-import { baseURL } from "../../util/auth";
+import { baseURL } from "../util/auth";
 import { ImSearch } from "react-icons/im";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import { useRouter } from "next/router";
