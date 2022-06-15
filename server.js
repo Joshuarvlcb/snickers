@@ -6,7 +6,7 @@ const connectDB = require("./server/db/connect");
 const port = process.env.PORT || 3000;
 //next
 const next = require("next");
-const dev = process.env.NODE_ENV !== "production";
+const dev = true;
 
 const nextApp = next({ dev });
 const handler = nextApp.getRequestHandler();
