@@ -3,12 +3,8 @@ const sslRedirect = require("heroku-ssl-redirect").default;
 const express = require("express");
 const http = require("http");
 const app = express();
-app.use(function (req, res, next) {
-  var reqType = req.headers["x-forwarded-proto"];
-  reqType == "https"
-    ? next()
-    : res.redirect("https://" + req.headers.host + req.url);
-});
+app.use(sslRedirect);
+
 const connectDB = require("./server/db/connect");
 const port = process.env.PORT || 3000;
 //next
@@ -45,6 +41,11 @@ nextApp.prepare().then(() => {
   const server = http.createServer(app);
   server.listen(port, (err) => {
     if (err) return console.log(err, "foo");
+
+    server.on("clientError", (err, socket) => {
+      console.error(err);
+      socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+    });
     console.log(`listening to port ${port}`);
   });
 });
