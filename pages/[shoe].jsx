@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { baseURL } from "./util/auth";
+import { baseURL } from "../util/auth";
 import styles from "../styles/Shoe.module.scss";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Size from "./components/Size";
-import { addToCart, deleteProduct, getCart } from "./util/cartActions";
+import { addToCart, deleteProduct, getCart } from "../util/cartActions";
 import {
   deleteWishlistItem,
   addWishlistItem,
   getWishlist,
-} from "./util/wishlistActions";
+} from "../util/wishlistActions";
 
 const Shoe = ({ user }) => {
   const shoeSizes = [
