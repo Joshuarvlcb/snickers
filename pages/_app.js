@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import Layout from "./components/Layout";
-import { redirect, baseURL } from "./util/auth";
+import { redirect, baseURL } from "../util/auth";
 import axios from "axios";
 import Head from "next/head";
 

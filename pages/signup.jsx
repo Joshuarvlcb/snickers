@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { signup as createUser } from "./util/loginActions";
+import { signup as createUser } from "../util/loginActions";
 import Link from "next/link";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import styles from "../styles/Auth.module.scss";
