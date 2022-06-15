@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { baseURL } from "./util/auth";
+import { baseURL } from "../util/auth";
 import {
   deleteWishlistItem,
   getWishlist,
   deleteWishlist,
-} from "./util/wishlistActions";
+} from "../util/wishlistActions";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import Shoe from "./components/Shoe";

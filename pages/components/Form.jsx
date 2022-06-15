@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import styles from "../../styles/Payment.module.scss";
-import { baseURL } from "../util/auth";
+import { baseURL } from "../../util/auth";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 const Form = ({ data }) => {
   const stripe = useStripe();

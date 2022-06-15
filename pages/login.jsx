@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Cookie from "js-cookie";
-import { login as loggingUser } from "./util/loginActions";
+import { login as loggingUser } from "../util/loginActions";
 import styles from "../styles/Auth.module.scss";
 const Login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });

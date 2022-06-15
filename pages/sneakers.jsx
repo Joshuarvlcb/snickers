@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getShoes } from "./util/shoeActions";
+import { getShoes } from "../util/shoeActions";
 import Shoe from "./components/Shoe";
 import styles from "../styles/Sneakers.module.scss";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
