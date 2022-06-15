@@ -1,6 +1,6 @@
-const sslRedirect = require("heroku-ssl-redirect");
-const express = require("express");
 require("dotenv").config();
+const sslRedirect = require("heroku-ssl-redirect").default;
+const express = require("express");
 
 const app = express();
 app.use(sslRedirect());
