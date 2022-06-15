@@ -1,7 +1,9 @@
 const express = require("express");
 require("dotenv").config();
+const http = require("http");
 
 const app = express();
+
 const connectDB = require("./server/db/connect");
 const port = process.env.PORT || 3000;
 //next
@@ -31,9 +33,11 @@ app.use("/api/v1/wishlist", wishlist);
 connectDB();
 
 //start server!!
+const httpServer = http.createServer(app);
+
 nextApp.prepare().then(() => {
-  app.all("*", (req, res) => handler(req, res));
-  app.listen(port, (err) => {
+  httpServer.all("*", (req, res) => handler(req, res));
+  httpServer.listen(port, (err) => {
     if (err) return console.log(err);
     console.log(`listening to port ${port}`);
   });
