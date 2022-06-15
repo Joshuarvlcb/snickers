@@ -1,8 +1,9 @@
+const sslRedirect = require("heroku-ssl-redirect");
 const express = require("express");
 require("dotenv").config();
-const http = require("http");
 
 const app = express();
+app.use(sslRedirect());
 
 const connectDB = require("./server/db/connect");
 const port = process.env.PORT || 3000;
@@ -38,8 +39,6 @@ nextApp.prepare().then(() => {
   app.all("*", (req, res) => handler(req, res));
   app.listen(port, (err) => {
     if (err) return console.log(err);
-    var server = http.createServer(this);
     console.log(`listening to port ${port}`);
-    return server.listen.apply(server, arguments);
   });
 });
