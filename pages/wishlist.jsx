@@ -29,7 +29,7 @@ delete all items from wishlist
 
 */
 
-const wishlist = ({ user, wishlist }) => {
+const Wishlist = ({ user, wishlist }) => {
   const [products, setProducts] = useState(wishlist);
   return (
     <div className={styles["cart"]}>
@@ -96,7 +96,7 @@ const wishlist = ({ user, wishlist }) => {
   );
 };
 
-export default wishlist;
+export default Wishlist;
 
 wishlist.getInitialProps = async (ctx) => {
   try {

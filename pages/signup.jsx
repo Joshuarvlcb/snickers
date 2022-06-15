@@ -3,7 +3,7 @@ import { signup as createUser } from "./util/loginActions";
 import Link from "next/link";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import styles from "../styles/Auth.module.scss";
-const signup = () => {
+const Signup = () => {
   /*
     {
         name:''
@@ -114,4 +114,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;

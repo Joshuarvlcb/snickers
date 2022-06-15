@@ -23,7 +23,7 @@ checkout button
 
 */
 
-const cart = ({ cart, user }) => {
+const Cart = ({ cart, user }) => {
   const [products, setProducts] = useState(cart);
   /*
   <button
@@ -119,9 +119,9 @@ const cart = ({ cart, user }) => {
   );
 };
 
-export default cart;
+export default Cart;
 
-cart.getInitialProps = async (ctx, component) => {
+Cart.getInitialProps = async (ctx, component) => {
   try {
     const { token, email } = parseCookies(ctx);
     if (token) {

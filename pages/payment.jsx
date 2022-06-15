@@ -11,7 +11,7 @@ create array with names of step map those return step
 props passed in will be setData and name 
 
 */
-const payment = ({ email, user }) => {
+const Payment = ({ email, user }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [step, setStep] = useState(0);
@@ -109,4 +109,4 @@ const payment = ({ email, user }) => {
   );
 };
 
-export default payment;
+export default Payment;

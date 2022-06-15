@@ -4,7 +4,7 @@ import Shoe from "./components/Shoe";
 import styles from "../styles/Sneakers.module.scss";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
-const sneakers = () => {
+const Sneakers = () => {
   /*
     state for filters 
     state for sorts
@@ -286,4 +286,4 @@ const sneakers = () => {
   );
 };
 
-export default sneakers;
+export default Sneakers;

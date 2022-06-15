@@ -4,7 +4,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import Cookie from "js-cookie";
 import { login as loggingUser } from "./util/loginActions";
 import styles from "../styles/Auth.module.scss";
-const login = () => {
+const Login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
 
@@ -79,4 +79,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
