@@ -1,9 +1,14 @@
 require("dotenv").config();
-const sslRedirect = require("heroku-ssl-redirect").default;
+// const sslRedirect = require("heroku-ssl-redirect").default;
 const express = require("express");
 const http = require("http");
 const app = express();
-app.use(sslRedirect);
+app.use(function (req, res, next) {
+  var reqType = req.headers["x-forwarded-proto"];
+  reqType == "https"
+    ? next()
+    : res.redirect("https://" + req.headers.host + req.url);
+});
 
 const connectDB = require("./server/db/connect");
 const port = process.env.PORT || 3000;
