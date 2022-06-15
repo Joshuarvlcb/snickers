@@ -34,10 +34,11 @@ app.use("/api/v1/wishlist", wishlist);
 connectDB();
 
 //start server!!
-const server = http.createServer(app);
 
 nextApp.prepare().then(() => {
+  //what is app listen and app all
   app.all("*", (req, res) => handler(req, res));
+  const server = http.createServer(app);
   server.listen(port, (err) => {
     if (err) return console.log(err, "foo");
     console.log(`listening to port ${port}`);
