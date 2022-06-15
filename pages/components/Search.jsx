@@ -115,9 +115,10 @@ const Search = ({ popularShoes }) => {
             <h3 className={styles["title"]}>Top Results</h3>
             <div className={styles["shoes_container"]}>
               {shoe === "" ? (
-                popularShoes.map((shoe) => {
+                popularShoes.map((shoe, i) => {
                   return (
                     <div
+                      key={i}
                       className={styles.shoe}
                       onClick={() => {
                         router.push("/" + shoe._id);
@@ -135,9 +136,10 @@ const Search = ({ popularShoes }) => {
                   );
                 })
               ) : shoe !== "" && shoes.length > 0 ? (
-                shoes.map((shoe) => {
+                shoes.map((shoe, i) => {
                   return (
                     <div
+                      key={i}
                       className={styles.shoe}
                       onClick={() => {
                         router.push("/" + shoe._id);
